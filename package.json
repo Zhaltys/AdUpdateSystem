@@ -1,10 +1,11 @@
 {
-  "name": "ddos",
+  "name": "addupdatesystem",
   "version": "1.0.0",
-  "description": "ddos test app",
+  "description": "ddos app actually",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "core": "node ./Core/server.js"
   },
   "author": "Lukas",
   "license": "ISC"
