@@ -2,7 +2,7 @@
 A repo for storing bachelour project
 
 // to install dependancies
-npm install
+# npm install
 
 // to start core
-npm run core
+# npm run core
