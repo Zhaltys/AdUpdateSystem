@@ -1,0 +1,11 @@
+{
+  "name": "ddos",
+  "version": "1.0.0",
+  "description": "ddos test app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Lukas",
+  "license": "ISC"
+}
