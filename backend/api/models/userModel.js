@@ -19,7 +19,7 @@ var UserModel = new Model({
 });
 
 UserModel.methods.comparePassword = function(password){
-    return bcrypt.compareSync(password, this.hash_password);
+    return bcrypt.compareSync(password, this.passwordHash);
 };
 
 module.exports = mongoose.model('Users', UserModel);

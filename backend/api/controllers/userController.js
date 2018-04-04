@@ -25,7 +25,7 @@ exports.register = function(req, res) {
         {
             if(user.length > 0)
             {
-                return res.status(183).send({
+                return res.status(409).send({
                     message: "User with this email already exists"
                   });
             }
