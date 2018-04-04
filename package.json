@@ -5,8 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "core": "node ./Core/server.js"
+    "core": "node --max-old-space-size=4096 ./Core/server.js",
+    "backend": "node ./backend/server.js"
   },
   "author": "Lukas",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cors": "^2.8.4",
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.11.12"
+  }
 }

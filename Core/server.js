@@ -5,12 +5,15 @@ var app = express();
 var skelbimas;
 
 var paspausdinti = function (adList){
-  skelbimas = adList[0].text + "\n\n\n\n\nLink: "+ adList[0].link;
+  skelbimas += "\n\n\n\n\n" + adList[0].text + "\n\n\n\n\nLink: "+ adList[0].link;
 }
 
-const url =
-  "https://autogidas.lt/skelbimai/automobiliai/?f_1=Volvo&f_model_14=C70&f_50=atnaujinimo_laika_asc";
-core.getSite(url, paspausdinti);
+const url = "https://autogidas.lt/skelbimai/automobiliai/?f_1=Volvo&f_model_14=C70&f_50=atnaujinimo_laika_asc";
+for (i = 0; i < 600; i++) {
+  core.getSite(url, paspausdinti, i);
+  if (i == 599)
+    console.log("done requesting");
+}
 
 app.get('/', (req, res) => res.send(skelbimas));
 
