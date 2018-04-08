@@ -8,7 +8,7 @@ var SearchModel = new Model({
     type: String,
     required: 'Title missing'
   },
-  Url: {
+  url: {
     type: String,
     required: 'URL missing'
   },

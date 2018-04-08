@@ -1,0 +1,26 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  text-align: center;
+  border-top:3px solid black;
+  padding: 5px;
+}
+.header {
+  width: 100%;
+  background: white;
+  border-bottom:3px solid black;
+  padding: 5px;
+}
+.header-button{
+  padding: 10px;
+  margin: 10px;
+  width: 150px;
+}
+.input-field{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}

@@ -23,7 +23,7 @@ var AdModel = new Model({
     type: Boolean,
     default: false
   },
-  Url: {
+  url: {
     type: String,
     required: 'URL missing'
   },
