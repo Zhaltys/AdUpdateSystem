@@ -10,6 +10,7 @@ var AdModel = new Model({
   },
   text: {
     type: String,
+    default: ""
   },
   foundOn: {
     type: Date,
@@ -17,7 +18,7 @@ var AdModel = new Model({
   },
   price: {
     type: Number,
-    required: 'Price missing'
+    default: -1
   },
   isReported: {
     type: Boolean,
@@ -34,10 +35,6 @@ var AdModel = new Model({
   searchId: {
     type: String,
       required: 'Search ID missing'
-  },
-  originalId: {
-    type: String,
-    required: 'Original ID missing'
   }
 });
 

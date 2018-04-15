@@ -6,10 +6,11 @@ module.exports = function(app) {
     // Ad routes
     app.route('/Ads')
         .get(userHandlers.loginRequired, ad.list_all_ads)
+        .post(userHandlers.loginRequired, ad.create_ad);
     
     app.route('/MyAds')
         .get(userHandlers.loginRequired, ad.list_user_ads)
-        .post(userHandlers.loginRequired, ad.create_ad);
+        
 
     app.route('/MyAds/:adId')
         .get(userHandlers.loginRequired, ad.list_user_ads)
