@@ -2,15 +2,6 @@
 
 // library for parsing ads from autogidas.lt
 var parseBodyToAds = function (body){
-    // page print
-    var fs = require('fs');
-    fs.writeFile("./Core/libs/testing//test.html", body, function(err) {
-        if(err) {
-            //return console.log(err);
-        }
-        //console.log("The file was saved!");
-    }); 
-    //--------------------------
     // next page logic
     var start_pos;
     var stop_pos;

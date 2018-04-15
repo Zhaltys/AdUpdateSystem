@@ -16,10 +16,13 @@ var paspausdinti = function (adList){
 }
 
 // testing
+// 1 page link
 const url = "https://autogidas.lt/skelbimai/automobiliai/?f_1=Volvo&f_model_14=C70&f_50=atnaujinimo_laika_asc";
+// multiple page link
 const url2 = "https://autogidas.lt/skelbimai/automobiliai/?f_1=Volvo&f_2=Dyzelinas";
+// all ads in autogidas link
+const url3 = "https://autogidas.lt/skelbimai/automobiliai/?f_1=&f_model_14=&f_215=&f_216=&f_41=&f_42=&f_3=&f_2=&f_376=";
 core.getSite(url2, paspausdinti);
-console.log("paejo");
 
 const searchesGetUrl = "http://localhost:3000/searches";
 function updateSearches() {
@@ -38,12 +41,9 @@ function updateSearches() {
 
 function pushFindingsToDB(adList) {
   const searchesPostUrl = "http://localhost:3000/Ads";
-  //console.log("Length: ",adList.length);
-  //console.log("Ads: ", adList);
   var i;
   for (var ad in adList)
   {
-    console.log("Putting: ",ad);
     {
       fetch('http://localhost:3000/Ads', {
         method: 'POST',
@@ -56,7 +56,6 @@ function pushFindingsToDB(adList) {
       })
         .then((data) => {
           console.log('Request success: ', data);
-          console.log('Ad insert succesful!', JSON.stringify(adList[ad]));
         })
         .catch((error) => {
           console.log('Request failure: ', error);
