@@ -5,27 +5,19 @@ const request = require('request');
 const fetch = require('node-fetch');
 const appConstants = require('../appConfig');
 
-var skelbimas;
+var searches = [];
 
-var paspausdinti = function (adListObj){
+var handleAds = function (adListObj){
   pushFindingsToDB(adListObj.adList);
   if (adListObj.nextPage.length > 0 && (adListObj.adList[adListObj.adList.length -1].promoted ||
-     adListObj.adList[adListObj.adList.length -1].time <= 10))
+     adListObj.adList[adListObj.adList.length -1].time <= appConstants.refreshTime))
   {
-    core.getSite(adListObj.nextPage, adListObj.adList[0].searchId, paspausdinti);
+    core.getSite(adListObj.nextPage, adListObj.adList[0].searchId, handleAds);
   }
 }
 
-// testing
-// 1 page link
-const url = "https://autogidas.lt/skelbimai/automobiliai/?f_1=Volvo&f_model_14=C70&f_50=atnaujinimo_laika_asc";
-// multiple page link
-const url2 = "https://autogidas.lt/skelbimai/automobiliai/?f_1=Volvo&f_2=Dyzelinas";
-// all ads in autogidas link
-const url3 = "https://autogidas.lt/skelbimai/automobiliai/?f_1=&f_model_14=&f_215=&f_216=&f_41=&f_42=&f_3=&f_2=&f_376=";
-core.getSite(url2, 123, paspausdinti);
-
 const searchesGetUrl = "http://localhost:3000/searches";
+
 function updateSearches() {
   request.get(
       {
@@ -35,7 +27,7 @@ function updateSearches() {
         }
       }, (error, response, body) => 
       {
-        console.log(JSON.parse(body)[0].title);
+        searches = JSON.parse(body);
       }
   );
 }
@@ -45,7 +37,7 @@ function pushFindingsToDB(adList) {
   var i;
   for (var ad in adList)
   {
-    if (adList[ad].time < 500) {
+    if (adList[ad].time < appConstants.refreshTime) {
     {
       fetch('http://localhost:3000/Ads', {
         method: 'POST',
@@ -57,7 +49,7 @@ function pushFindingsToDB(adList) {
   
       })
         .then((data) => {
-          console.log('Request success: ', data);
+          //console.log('Request success: ', data);
         })
         .catch((error) => {
           console.log('Request failure: ', error);
@@ -67,16 +59,26 @@ function pushFindingsToDB(adList) {
   }
 }
 
+function doSearch() {
+  for (var search in searches)
+  {
+    var searchObj = searches[search];
+    core.getSite(searchObj.url, searchObj._id, handleAds);
+  }
+}
 
-
-app.get('/', (req, res) => res.send(skelbimas));
 
 app.get('/update', function(e){
     updateSearches();
-    return "Updated";
+    console.log("Updated search list!");
 });
 
 
 app.listen(4000, () => console.log("Started on: ", 4000, "\nRefresh time: ", appConstants.refreshTime, " minutes."));
 
-var testLoop = setInterval(() => console.log("hi", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')), 1000);
+updateSearches();
+
+var testLoop = setInterval(() => {
+  doSearch();
+  console.log("Searches count: ", searches.length, "\n", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+}, appConstants.refreshTime*60*1000/2);

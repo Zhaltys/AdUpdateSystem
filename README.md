@@ -1,6 +1,8 @@
 # AdUpdateSystem
 A repo for storing bachelour project
 
+Before starting the project, make sure to configure email service options in the appConfig.js
+
 // to install dependancies
 # npm install
 

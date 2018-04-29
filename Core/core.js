@@ -10,7 +10,6 @@ module.exports = {
             for (var parser in parsers) {
                 if (url.indexOf(parsers[parser].template) > -1)
                 {
-                    console.log("done calling");
                     callBackFunction( parsers[parser].getAdList(body, searchId) );
                 }
             }

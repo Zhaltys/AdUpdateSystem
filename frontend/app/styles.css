@@ -16,11 +16,24 @@
 }
 .header-button{
   padding: 10px;
-  margin: 10px;
-  width: 150px;
+  margin: 5px;
+  width: 100px;
 }
 .input-field{
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 10px;
+}
+.ad-title{
+  font-size: 15px;
+}
+.ad-url{
+  font-size: 10px;
+}
+.ad-picture{
+  max-width: 300px;
+}
+
+.ad-list{
+  max-width: 400px;
 }

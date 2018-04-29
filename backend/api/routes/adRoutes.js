@@ -16,9 +16,9 @@ module.exports = function(app) {
         .get(userHandlers.loginRequired, ad.list_user_ads)
         .put(userHandlers.loginRequired, ad.update_ad)
         .delete(userHandlers.loginRequired, ad.delete_ad);
-
-    app.route('/Ads/:adId')
-        .get(ad.get_ad)        
+        
+    app.route('/Ads/:searchId')
+        .get(userHandlers.loginRequired, ad.list_search_ads);
     
     app.route('/auth/register')
         .post(userHandlers.register);

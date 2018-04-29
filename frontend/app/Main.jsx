@@ -21,7 +21,6 @@ export default class Main extends React.Component {
         false, // ads
         false, // my ads
         false, // new ad
-        false // search
       ],
       token: '',
       username: '',
@@ -137,7 +136,6 @@ export default class Main extends React.Component {
           {this.state.window[3] ? (<div className="col-auto"><UserList /></div>) : '' }
           {this.state.window[5] ? (<div className="col-auto"><MySearchesList token={this.state.token} /></div>) : ''}
           {this.state.window[6] ? (<div className="col-auto"><NewSearch token={this.state.token} modal={this.handleNewSearch} /></div>) : ''}
-          {this.state.window[7] ? (<div className="col-auto"><SearchList token={this.state.token} /></div>) : ''}
         </div>
         <div className="col-sm-1">
         </div>

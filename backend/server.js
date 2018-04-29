@@ -8,6 +8,11 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     jsonwebtoken = require('jsonwebtoken'),
     cors = require('cors');
+var helpers = require('./helperFunctions');
+const appConstants = require('../appConfig');
+
+// mailing
+helpers.sendMail(appConstants.adminMail, "started", "<h1>App Started<h1>");
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;

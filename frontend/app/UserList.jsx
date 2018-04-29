@@ -35,10 +35,7 @@ export default class UserList extends React.Component {
     const userList = this.state.users.map((user, index) => (
       <div className="container">
         <li className="list-group-item" key={index}>
-          <h3>Name: {user.name}</h3>
-          <div>Number: {user.number}</div>
-          <div>Location: {user.location}</div>
-          <div>Created: {user.created}</div>
+          <h3>Email: {user.email}</h3>
           <div>ID: {user._id}</div>
         </li>
       </div>));
@@ -46,7 +43,6 @@ export default class UserList extends React.Component {
       <div>
         <div><h2>User list</h2></div>
         <ul className="list-group">{userList}</ul>
-        <button onClick={this.getData}>Refresh</button>
       </div>
     );
   }
