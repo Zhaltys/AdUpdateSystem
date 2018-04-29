@@ -5,13 +5,13 @@ const parsers = require('./libs/allParsers');
 
 
 module.exports = {
-    getSite: function (url, callBackFunction) {
+    getSite: function (url, searchId, callBackFunction) {
         request.get(url, (error, response, body) => {
             for (var parser in parsers) {
                 if (url.indexOf(parsers[parser].template) > -1)
                 {
                     console.log("done calling");
-                    callBackFunction( parsers[parser].getAdList(body) );
+                    callBackFunction( parsers[parser].getAdList(body, searchId) );
                 }
             }
         });

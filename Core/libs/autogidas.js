@@ -1,7 +1,7 @@
 
 
 // library for parsing ads from autogidas.lt
-var parseBodyToAds = function (body){
+var parseBodyToAds = function (body, searchId){
     // next page logic
     var start_pos;
     var stop_pos;
@@ -24,18 +24,18 @@ var parseBodyToAds = function (body){
     var next_start = body.indexOf("<a href=\"/skelbimas/", stop_pos+1);
     var ad  = body.substring(start_pos, stop_pos+4);
     var index = 0;
-    adList.push(getProperties(ad));
+    adList.push(getProperties(ad, searchId));
     while (next_start != -1)
     {
         var next_stop = body.indexOf("</a>", next_start+1);
         ad = body.substring(next_start, next_stop+4);
         next_start = body.indexOf("<a href=\"/skelbimas/", next_stop+1);
         index++;
-        adList.push(getProperties(ad));
+        adList.push(getProperties(ad, searchId));
     }
     return {nextPage: next_page_link, adList: adList};
 }
-var getProperties = function (ad){
+var getProperties = function (ad, searchId){
     var start_pos;
     var stop_pos;
     var template;
@@ -60,6 +60,9 @@ var getProperties = function (ad){
     start_pos = ad.indexOf("\">", start_pos);
     stop_pos = ad.indexOf("</div>", start_pos);
     var time = ad.substring(start_pos + 2, stop_pos);
+    // find if promoted
+    template = "<div class=\"up\"";
+    var promoted = ad.indexOf(template) > -1;
 
 
     return {
@@ -67,16 +70,30 @@ var getProperties = function (ad){
         title: title,
         imageUrl: image,
         //text: ad,
-        time: time,
-        searchId: 0
+        time: parseTimeToMinutes(time),
+        searchId: searchId,
+        promoted: promoted
     }
 }
 
+function parseTimeToMinutes(time)
+{
+    var timeObj = time.split(" ");
+    const timeCases = 
+    {
+        'm.' : 60*24*365,
+        'd.': 60*24,
+        'mėn.' : 60*24*30,
+        'val.' : 60,
+        'min.' : 1
+    }
+    return timeObj[1] * timeCases[timeObj[2]];
+}
 
 module.exports = {
-    getAdList: function (pageBody)
+    getAdList: function (pageBody, searchId)
     {
-        return parseBodyToAds(pageBody);
+        return parseBodyToAds(pageBody, searchId);
     },
     template: 'autogidas.lt'
 }

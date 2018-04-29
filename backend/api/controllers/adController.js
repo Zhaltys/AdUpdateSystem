@@ -23,13 +23,22 @@ exports.list_user_ads = function(req, res){
 
 
 exports.create_ad = function(req, res) {
-    req.body.user_ID = req.user.ID;
-    var new_ad = new Ad(req.body);
-    new_ad.save(function(err, object) {
-        if (err)
-            res.send(err);
-        res.json(object);
+    Ad.findOne({
+        searchId: req.body.searchId, url: req.body.url, 
+      }, function(err, ad) {
+        if (err) throw err;
+        if (!ad) {
+            req.body.user_ID = req.user.ID;
+            var new_ad = new Ad(req.body);
+            new_ad.save(function(err, object) {
+                if (err)
+                    res.send(err);
+                res.json(object);
     });
+        } else{
+            res.status(401).json({ message: 'Ad exists' });
+        }
+      });    
 };
 
 
