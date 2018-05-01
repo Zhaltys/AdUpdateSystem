@@ -12,7 +12,7 @@ let transporter = nodemailer.createTransport({
   });
   function sendMail(toMail, body, htmlBody) {
   let mailOptions = {
-    from: "DDOS APP 👻",
+    from: "DDOS APP 👻 <" + appConstants.mailHostName + ">",
     to: toMail,
     subject: 'DDOS App update', // Subject line
     text: body, // plain text body

@@ -11,7 +11,7 @@ var handleAds = function (adListObj){
   pushFindingsToDB(adListObj.adList);
   if (adListObj.nextPage.length > 0 && (adListObj.adList[adListObj.adList.length -1].promoted ||
      adListObj.adList[adListObj.adList.length -1].time <= appConstants.refreshTime))
-  {
+  {    
     core.getSite(adListObj.nextPage, adListObj.adList[0].searchId, handleAds);
   }
 }
@@ -81,4 +81,4 @@ updateSearches();
 var testLoop = setInterval(() => {
   doSearch();
   console.log("Searches count: ", searches.length, "\n", new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-}, appConstants.refreshTime*60*1000/2);
+}, appConstants.refreshInterval*60*1000/2);

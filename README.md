@@ -10,4 +10,5 @@ Before starting the project, make sure to configure email service options in the
 # npm run core
 
 // to start mongo
-# 'C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe' --dbpath C:\DB
+# cd "C:\Program Files\MongoDB\Server\3.4\bin\"
+# mongod.exe --dbpath C:\DB

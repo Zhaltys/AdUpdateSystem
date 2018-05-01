@@ -5,7 +5,6 @@ import Header from './Header';
 import Login from './Login';
 import MySearchesList from './MySearchesList';
 import NewSearch from './NewSearch';
-import SearchList from './SearchList';
 import png from './people.png';
 
 export default class Main extends React.Component {

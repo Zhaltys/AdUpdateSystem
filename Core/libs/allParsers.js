@@ -1,4 +1,5 @@
 // parser inports
 module.exports = {
-    autogidas: require('./autogidas')
+    autogidas: require('./autogidas'),
+    skelbiu: require('./skelbiu')
 }
