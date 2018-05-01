@@ -1,6 +1,6 @@
 
 
-// library for parsing ads from autogidas.lt
+// library for parsing ads from skelbiu.lt
 var parseBodyToAds = function (body, searchId){
     // next page logic
     var start_pos;
@@ -67,8 +67,6 @@ var getProperties = function (ad, searchId){
     start_pos = ad.indexOf(template);
     stop_pos = ad.indexOf("</div>", start_pos);
     var time = ad.substring(start_pos + template.length, stop_pos);
-    //if (parseTimeToMinutes(time) == 999)
-    //console.log(ad);
     // find if promoted
     var promoted = false;
 
