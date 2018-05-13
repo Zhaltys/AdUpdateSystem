@@ -34,7 +34,6 @@ exports.list_search_ads = function(req, res){
     });
 };
 
-
 exports.create_ad = function(req, res) {
     Ad.findOne({
         searchId: req.body.searchId, url: req.body.url, 
@@ -68,7 +67,6 @@ exports.create_ad = function(req, res) {
       });    
 };
 
-
 exports.get_ad = function(req, res) {
     Ad.findById(req.params.adId, function(err, object) {
         if (err)
@@ -79,7 +77,6 @@ exports.get_ad = function(req, res) {
     });
 };
 
-
 exports.update_ad = function(req, res) {
     Ad.findOneAndUpdate({_id: req.params.adId, user_ID: req.user.ID}, req.body, {new: true}, function(err, object) {
         if (err)
@@ -87,7 +84,6 @@ exports.update_ad = function(req, res) {
         res.json(object);
     });
 };
-
 
 exports.delete_ad = function(req, res) {
     Ad.remove({

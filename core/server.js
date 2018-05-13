@@ -35,10 +35,12 @@ function updateSearches() {
 function pushFindingsToDB(adList) {
   const searchesPostUrl = "http://localhost:3000/Ads";
   var i;
+  var reported = 0;
   for (var ad in adList)
   {
     if (adList[ad].time < appConstants.refreshTime) {
     {
+      reported++;
       fetch('http://localhost:3000/Ads', {
         method: 'POST',
         headers: {
@@ -57,6 +59,10 @@ function pushFindingsToDB(adList) {
     }
     }
   }
+  console.log("\n---- Page log ------");
+  console.log("Ads found:    ", adList.length);  
+  console.log("Ads reported: ", reported);
+  console.log("--------------------\n")
 }
 
 function doSearch() {

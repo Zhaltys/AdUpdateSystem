@@ -19,6 +19,7 @@ let transporter = nodemailer.createTransport({
     html: htmlBody // html body
   };
     transporter.sendMail(mailOptions, (error, info) => {
+      console.log("New mail to: ", toMail);
     if (error) {
         return console.log(error);
     }
