@@ -5,6 +5,7 @@ import Header from './Header';
 import Login from './Login';
 import MySearchesList from './MySearchesList';
 import NewSearch from './NewSearch';
+import UserDetails from './UserDetails';
 import png from './people.png';
 
 export default class Main extends React.Component {
@@ -20,9 +21,10 @@ export default class Main extends React.Component {
         false, // ads
         false, // my ads
         false, // new ad
+        false  // user details
       ],
       token: '',
-      username: '',
+      user: null,
       showModal: false,
       showMessageModal: false,
       message: '',
@@ -32,8 +34,10 @@ export default class Main extends React.Component {
     this.handleOK = this.handleOK.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleNewSearch = this.handleNewSearch.bind(this);
+    this.handleUserUpdate = this.handleUserUpdate.bind(this);
   }
-  setLogin(t, n) {
+  setLogin(token, user) {
+    console.log(user);
     const defaultWindow = [
       true,
       false,
@@ -46,8 +50,8 @@ export default class Main extends React.Component {
     ];
     this.setState({
       ...this.state,
-      token: t,
-      username: n,
+      token: token,
+      user: user,
       window: defaultWindow,
       showModal: true,
     });
@@ -69,6 +73,14 @@ export default class Main extends React.Component {
       window: defaultWindow,
     });
   }
+  handleUserUpdate(user)
+  {
+    this.setState({
+      ...this.state,
+      user: user
+    });
+  }
+
   handleRegister(m) {
     this.setState({
       ...this.state,
@@ -98,7 +110,7 @@ export default class Main extends React.Component {
         {this.state.showModal ?
           <div className="modal">
             <div className="modal-content">
-              <p> You are now logged in as <h2>{this.state.username}</h2> </p>
+              <p> You are now logged in as <h2>{this.state.user.username}</h2> </p>
               <button onClick={this.handleOK}>OK</button>
             </div>
           </div> : ''
@@ -114,14 +126,14 @@ export default class Main extends React.Component {
         <Header
           window={this.state.window}
           setActive={this.setActive}
-          username={this.state.username}
+          user={this.state.user}
         />
         <div className="container">
         <div className="row">
         <div className="col-sm-1">
         </div>          
           {this.state.window[0] ? (
-            <div className="col-auto" style={{width : '500px'}}>
+            <div style={{width : '600px', 'margin': 'auto'}}>
               <h2>
                 Ad Update Tracking System Prototype
               </h2>
@@ -135,6 +147,7 @@ export default class Main extends React.Component {
           {this.state.window[3] ? (<div className="col-auto"><UserList /></div>) : '' }
           {this.state.window[5] ? (<div className="col-auto"><MySearchesList token={this.state.token} /></div>) : ''}
           {this.state.window[6] ? (<div className="col-auto"><NewSearch token={this.state.token} modal={this.handleNewSearch} /></div>) : ''}
+          {this.state.window[7] ? (<div className="col-auto"><UserDetails token={this.state.token} handleUserUpdate={this.handleUserUpdate} user={this.state.user}/></div>):''}
         </div>
         <div className="col-sm-1">
         </div>

@@ -35,7 +35,8 @@ export default class UserList extends React.Component {
     const userList = this.state.users.map((user, index) => (
       <div className="container">
         <li className="list-group-item" key={index}>
-          <h3>Email: {user.email}</h3>
+          <h4>Username: {user.username}</h4>
+          <h5>Email: {user.email}</h5>
           <div>ID: {user._id}</div>
         </li>
       </div>));

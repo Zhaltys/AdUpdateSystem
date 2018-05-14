@@ -9,7 +9,8 @@ export default class MySearchesList extends React.Component {
       isLoading: true,
       searches: [],
       token: this.props.token,
-      expandedSearch:-1
+      expandedSearch:-1,
+      editingSearch: -1
     };
     this.getData = this.getData.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -56,8 +57,12 @@ export default class MySearchesList extends React.Component {
     else
       this.setState({...this.state, expandedSearch: -1});    
   }
+  handleEdit(index) {
+    this.setState({...this.state, editingSearch: index});
+  }
   handleUpdate(index) {
     this.sendData(index);
+    this.setState({...this.state, editingSearch: -1});
   }
   sendData(index) {
     fetch(`http://localhost:3000/mysearches/${this.state.searches[index]._id}`, {
@@ -103,7 +108,8 @@ export default class MySearchesList extends React.Component {
     if (!this.state.isLoading) {
       const searchList = this.state.searches.map((search, index) => (
         <div className="container">
-          <li className="list-group-item" key={index}>
+        {this.state.editingSearch==index?
+          <li className="list-group-item" key={index}>          
             <div class='input-group input-field'>
               <span className='input-group-addon'>
                 Title:
@@ -116,7 +122,23 @@ export default class MySearchesList extends React.Component {
               </span>
               <input disabled={true} class="form-control" onChange={e => this.handleUrlChange(e.target.value, index)} type="text" value={search.url} />
             </div>
-            <button className='btn btn-warning input-field' onClick={() => this.handleUpdate(index)}>Update</button>
+            <button className='btn btn-warning input-field' onClick={() => this.handleUpdate(index)}>Update title</button>
+          </li>
+          :
+          <li className="list-group-item" key={index}>          
+            <div class='input-group input-field'>
+              <span>
+                Title: 
+              </span>
+              <strong> {search.title} </strong>
+            </div>
+            <div class='input-group input-field'>
+              <span className='input-group-addon'>
+                URL:
+              </span>
+              <input disabled={true} class="form-control" onChange={e => this.handleUrlChange(e.target.value, index)} type="text" value={search.url} />
+            </div>
+            <button className='btn btn-warning input-field' onClick={() => this.handleEdit(index)}>Edit</button>
             <button className='btn btn-danger input-field' onClick={() => this.handleDelete(index)}>Delete</button>
             <button className='btn btn-info input-field' onClick={() =>  this.handleExpand(index)}>
             {this.state.expandedSearch == index? 
@@ -128,8 +150,9 @@ export default class MySearchesList extends React.Component {
                 token={this.state.token}
                 searchId={search._id}
               /> : ""}
-            </div>
+            </div>          
           </li>
+          }
         </div>));
       return (
         <div>

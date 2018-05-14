@@ -15,7 +15,7 @@ exports.list_all_users = function(req, res) {
 
 
 exports.register = function(req, res) {
-    User.find({email: req.body.email}, function(err,user){
+    User.find({username: req.body.username}, function(err,user){
         if (err){
             return res.status(500).send({
                 message: err
@@ -26,7 +26,7 @@ exports.register = function(req, res) {
             if(user.length > 0)
             {
                 return res.status(409).send({
-                    message: "User with this email already exists"
+                    message: "User with this username already exists"
                   });
             }
             else
@@ -51,7 +51,7 @@ exports.register = function(req, res) {
 
   exports.sign_in = function(req, res) {
     User.findOne({
-      email: req.body.email
+      username: req.body.username
     }, function(err, user) {
       if (err) throw err;
       if (!user) {
@@ -60,7 +60,10 @@ exports.register = function(req, res) {
         if (!user.comparePassword(req.body.password)) {
           res.status(401).json({ message: 'Authentication failed. Wrong password.' });
         } else {
-          return res.json({token: jwt.sign({ ID: user._id, email: user.email }, 'LukasSearchPrototype', { expiresIn: 60*60}), email:user.email});
+          return res.json({token: jwt.sign({ ID: user._id, username: user.username }, 
+            'LukasSearchPrototype', 
+            { expiresIn: 60*60}), 
+            user:{username:user.username,email:user.email,_id:user._id}});
         }
       }
     });
@@ -97,11 +100,36 @@ exports.get_user = function(req, res) {
 };
 
 exports.update_user = function(req, res) {
-    User.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true}, function(err, object) {
+    User.findOne({username : req.body.username}, function(err, object) {
         if (err)
             res.send(err);
-        res.json(object);
-    });
+        if (object!=null && object._id != req.body._id) {
+            res.status(409).json({message:"User with this username already exists!"});
+            return;
+        }
+
+        User.findOne({email :req.body.email}, function(err, object) {
+            if (err)
+                res.send(err);
+            if (object!=null && object._id != req.body._id){
+                res.status(409).json({message:"User with this email already exists!"});
+                return;
+            }
+            
+            User.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}, function(err, object) {
+                if (err)
+                    res.send(err);
+                res.json({
+                    message:"User updated!", 
+                    user: {
+                        _id: object._id,
+                        username: object.username,
+                        email: object.email
+                    }
+                });
+            });
+        });
+    });   
 };
 
 

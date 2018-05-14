@@ -1,16 +1,18 @@
 import React from 'react';
 
-export default class Login extends React.Component {
+export default class UserDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'Lukas',
-      password: '123',
+      username: props.user.username,
+      email: props.user.email,
+      _id: props.user._id,
       message: ''
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleEMailChange = this.handleEMailChange.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.sendData = this.sendData.bind(this);
   }
   handleUsernameChange(e) {
@@ -20,22 +22,28 @@ export default class Login extends React.Component {
     this.setState(...this.state, { password: e.target.value });
   }
 
-  handleLogin() {
+  handleEMailChange(e) {
+    this.setState(...this.state, { email: e.target.value });
+  }
+
+  handleUpdate() {
     this.sendData();
   }
 
   sendData() {
-    fetch('http://localhost:3000/auth/login', {
-      method: 'POST',
+    fetch('http://localhost:3000/Users/'+this.props.user._id, {
+      method: 'PUT',
       headers: {
         'Content-type': 'application/json',
+        authorization: (`JWT ${this.props.token}`)
       },
       body: JSON.stringify(this.state),
     }).then(response => response.json())
       .then((responseJson) => {
-        if (responseJson.token !== undefined) { this.props.setLogin(responseJson.token, responseJson.user); }
-        if (responseJson.message) {
-          this.setState(...this.state, { message: responseJson.message });
+        this.setState(...this.state, { message: responseJson.message?responseJson.message : '' });
+        if (responseJson.user)
+        {
+            this.props.handleUserUpdate(responseJson.user);
         }
       })
       .catch((error) => {
@@ -47,17 +55,17 @@ export default class Login extends React.Component {
     return (
       <div className="container well" style={{ border: '1px solid', padding: '30px', width: '400px' }}>
         <div>
-          <h2> Login </h2>
+          <h2> Edit Info </h2>
         </div>
         <div>
           <span> Username: </span>
           <input className="form-control" placeholder="Username" onChange={this.handleUsernameChange} type="text" value={this.state.username} />
         </div>
         <div>
-          <span> Password: </span>
-          <input className="form-control" placeholder="Password" onChange={this.handlePasswordChange} type="password" value={this.state.password} />
+          <span> Email: </span>
+          <input className="form-control" placeholder="Email" onChange={this.handleEMailChange} type="text" value={this.state.email} />
         </div>
-        <button className="btn btn-success" style={{'margin-top' : '5px'}} onClick={this.handleLogin}>Login</button>
+        <button className="btn btn-success" style={{'margin-top' : '5px'}} onClick={this.handleUpdate}>Update</button>
         {this.state.message.length?<div>{this.state.message}</div> : ''}
       </div>
     );

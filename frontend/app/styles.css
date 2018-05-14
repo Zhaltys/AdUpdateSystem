@@ -10,7 +10,7 @@
 }
 .header {
   width: 100%;
-  background: white;
+  background: #474747;
   border-bottom:3px solid black;
   padding: 5px;
 }
@@ -36,4 +36,18 @@
 
 .ad-list{
   max-width: 400px;
+}
+
+.user-display{
+  float: right;
+  width: unset;
+  font-weight: bold;
+  background-color: #b3ffb3;
+  color: #606060;
+  font-style: italic;
+  border: solid white;
+}
+
+.error{
+  color: #ff6767;
 }

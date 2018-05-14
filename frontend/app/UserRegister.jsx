@@ -5,9 +5,11 @@ export default class UserRegister extends React.Component {
     super(props);
 
     this.state = {
+      username: '',
       email: '',
       password: ''
     };
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handleEMailChange = this.handleEMailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
@@ -15,6 +17,10 @@ export default class UserRegister extends React.Component {
   }
 
   componentDidMount() {
+  }
+
+  handleUsernameChange(e) {
+    this.setState(...this.state, { username: e.target.value });
   }
   handleEMailChange(e) {
     this.setState(...this.state, { email: e.target.value });
@@ -52,6 +58,12 @@ export default class UserRegister extends React.Component {
         <div>
           <h2>User registration</h2>
         </div>
+        <div>
+          <span>
+            Please enter your E-mail:
+          </span>
+          <input className="form-control" placeholder="Username" onChange={this.handleUsernameChange} type="text" value={this.state.username} />
+        </div>  
         <div>
           <span>
             Please enter your E-mail:

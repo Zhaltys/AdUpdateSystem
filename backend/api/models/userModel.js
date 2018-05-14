@@ -4,6 +4,10 @@ bcrypt = require('bcrypt');
 var Model = mongoose.Schema;
 
 var UserModel = new Model({
+    username: {
+        type: String,
+        required: 'Username missing'
+    },
     email: {
         type: String,
         required: 'Email missing'

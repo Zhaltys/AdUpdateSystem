@@ -50,6 +50,8 @@ var getProperties = function (ad, searchId){
     start_pos = ad.indexOf(template);
     stop_pos = ad.indexOf("\"", start_pos + template.length);
     var link = ad.substring(start_pos + template.length, stop_pos);
+    if (link[0] == '/')
+        link = "https://skelbiu.lt" + link;
     // find title
     template = "<h3>";
     start_pos = ad.indexOf(template);
@@ -72,7 +74,7 @@ var getProperties = function (ad, searchId){
 
 
     return {
-        url: "https://skelbiu.lt" + link,
+        url: link,
         title: title,
         imageUrl: image,
         //text: ad,
