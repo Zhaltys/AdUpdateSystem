@@ -7,7 +7,8 @@ export default class UserRegister extends React.Component {
     this.state = {
       username: '',
       email: '',
-      password: ''
+      password: '',
+      message:''
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handleEMailChange = this.handleEMailChange.bind(this);
@@ -25,7 +26,7 @@ export default class UserRegister extends React.Component {
   handleEMailChange(e) {
     this.setState(...this.state, { email: e.target.value });
   }
-  
+
   handlePasswordChange(e) {
     this.setState(...this.state, { password: e.target.value });
   }
@@ -45,7 +46,14 @@ export default class UserRegister extends React.Component {
     })
       .then((data) => {
         console.log('Request success: ', data);
-        this.props.register('Success. You can now log in!');
+        if (data.status==409)
+        {
+          this.setState(...this.state, { message: 'User already exists!' });
+        }
+        else
+        {
+          this.props.register('Success. You can now log in!');
+        }
       })
       .catch((error) => {
         console.log('Request failure: ', error);
@@ -63,20 +71,21 @@ export default class UserRegister extends React.Component {
             Please enter your E-mail:
           </span>
           <input className="form-control" placeholder="Username" onChange={this.handleUsernameChange} type="text" value={this.state.username} />
-        </div>  
+        </div>
         <div>
           <span>
             Please enter your E-mail:
           </span>
           <input className="form-control" placeholder="E-Mail" onChange={this.handleEMailChange} type="text" value={this.state.email} />
-        </div>        
+        </div>
         <div>
           <span>
             Please enter your password:
           </span>
           <input className="form-control" placeholder="Password" onChange={this.handlePasswordChange} type="password" value={this.state.password} />
         </div>
-        <button className="btn btn-success" style={{'margin-top' : '5px'}} onClick={this.handleRegister}>Register</button>
+        <button className="btn btn-success" style={{ 'margin-top': '5px' }} onClick={this.handleRegister}>Register</button>
+        {this.state.message.length ? <div>{this.state.message}</div> : ''}
       </div>
     );
   }

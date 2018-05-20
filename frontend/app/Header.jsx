@@ -16,8 +16,8 @@ export default class Header extends React.Component {
     const w = this.props.window;
     return (
       <div className="header">
-      <span className="btn-group">        
- 
+        <span className="btn-group">
+
           <button onClick={() => this.handleClick(0)} className={w[0] == true ? active : inactive}>Home</button>
           {!this.props.user ? <button onClick={() => this.handleClick(1)} className={w[1] == true ? active : inactive}>Login</button> : ''}
           {!this.props.user ? <button onClick={() => this.handleClick(2)} className={w[2] == true ? active : inactive}>Register</button> : ''}
@@ -26,9 +26,9 @@ export default class Header extends React.Component {
           {this.props.user ? <button onClick={() => this.handleClick(6)} className={w[6] == true ? active : inactive}>New Search</button> : ''}
 
         </span>
-      <span>
-        {this.props.user ? <li onClick={() => this.handleClick(7)} className='btn btn-default header-button user-display' >user: {this.props.user.username}</li> : ''}
-      </span>
+        <span>
+          {this.props.user ? <li onClick={() => this.handleClick(7)} className="btn btn-default header-button user-display" >user: {this.props.user.username}</li> : ''}
+        </span>
       </div>
     );
   }

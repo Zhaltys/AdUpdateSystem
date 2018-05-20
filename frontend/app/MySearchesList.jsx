@@ -9,8 +9,8 @@ export default class MySearchesList extends React.Component {
       isLoading: true,
       searches: [],
       token: this.props.token,
-      expandedSearch:-1,
-      editingSearch: -1
+      expandedSearch: -1,
+      editingSearch: -1,
     };
     this.getData = this.getData.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -36,7 +36,8 @@ export default class MySearchesList extends React.Component {
       .then(response => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        this.setState({ ...this.state,
+        this.setState({
+          ...this.state,
           isLoading: false,
           searches: responseJson,
         }, () => {
@@ -52,17 +53,14 @@ export default class MySearchesList extends React.Component {
     this.getData();
   }
   handleExpand(index) {
-    if (index != this.state.expandedSearch)
-      this.setState({...this.state, expandedSearch: index});
-    else
-      this.setState({...this.state, expandedSearch: -1});    
+    if (index != this.state.expandedSearch) { this.setState({ ...this.state, expandedSearch: index }); } else { this.setState({ ...this.state, expandedSearch: -1 }); }
   }
   handleEdit(index) {
-    this.setState({...this.state, editingSearch: index});
+    this.setState({ ...this.state, editingSearch: index });
   }
   handleUpdate(index) {
     this.sendData(index);
-    this.setState({...this.state, editingSearch: -1});
+    this.setState({ ...this.state, editingSearch: -1 });
   }
   sendData(index) {
     fetch(`http://localhost:3000/mysearches/${this.state.searches[index]._id}`, {
@@ -108,50 +106,50 @@ export default class MySearchesList extends React.Component {
     if (!this.state.isLoading) {
       const searchList = this.state.searches.map((search, index) => (
         <div className="container">
-        {this.state.editingSearch==index?
-          <li className="list-group-item" key={index}>          
-            <div class='input-group input-field'>
-              <span className='input-group-addon'>
+          {this.state.editingSearch == index ?
+            <li className="list-group-item" key={index}>
+              <div className="input-group input-field">
+                <span className="input-group-addon">
                 Title:
-              </span>
-              <input class="form-control" onChange={e => this.handleTitleChange(e.target.value, index)} type="text" value={search.title} />
-            </div>
-            <div class='input-group input-field'>
-              <span className='input-group-addon'>
+                </span>
+                <input className="form-control" onChange={e => this.handleTitleChange(e.target.value, index)} type="text" value={search.title} />
+              </div>
+              <div className="input-group input-field">
+                <span className="input-group-addon">
                 URL:
-              </span>
-              <input disabled={true} class="form-control" onChange={e => this.handleUrlChange(e.target.value, index)} type="text" value={search.url} />
-            </div>
-            <button className='btn btn-warning input-field' onClick={() => this.handleUpdate(index)}>Update title</button>
-          </li>
+                </span>
+                <input disabled className="form-control" onChange={e => this.handleUrlChange(e.target.value, index)} type="text" value={search.url} />
+              </div>
+              <button className="btn btn-warning input-field" onClick={() => this.handleUpdate(index)}>Update title</button>
+            </li>
           :
-          <li className="list-group-item" key={index}>          
-            <div class='input-group input-field'>
-              <span>
-                Title: 
-              </span>
-              <strong> {search.title} </strong>
-            </div>
-            <div class='input-group input-field'>
-              <span className='input-group-addon'>
+            <li className="list-group-item" key={index}>
+              <div className="input-group input-field">
+                <span>
+                Title:
+                </span>
+                <strong> {search.title} </strong>
+              </div>
+              <div className="input-group input-field">
+                <span className="input-group-addon">
                 URL:
-              </span>
-              <input disabled={true} class="form-control" onChange={e => this.handleUrlChange(e.target.value, index)} type="text" value={search.url} />
-            </div>
-            <button className='btn btn-warning input-field' onClick={() => this.handleEdit(index)}>Edit</button>
-            <button className='btn btn-danger input-field' onClick={() => this.handleDelete(index)}>Delete</button>
-            <button className='btn btn-info input-field' onClick={() =>  this.handleExpand(index)}>
-            {this.state.expandedSearch == index? 
-              "Close findings" : "Show findings"}
-            </button>
-            <div>
-              {this.state.expandedSearch == index? 
-              <AdList
-                token={this.state.token}
-                searchId={search._id}
-              /> : ""}
-            </div>          
-          </li>
+                </span>
+                <input disabled className="form-control" onChange={e => this.handleUrlChange(e.target.value, index)} type="text" value={search.url} />
+              </div>
+              <button className="btn btn-warning input-field" onClick={() => this.handleEdit(index)}>Edit</button>
+              <button className="btn btn-danger input-field" onClick={() => this.handleDelete(index)}>Delete</button>
+              <button className="btn btn-info input-field" onClick={() => this.handleExpand(index)}>
+                {this.state.expandedSearch == index ?
+              'Close findings' : 'Show findings'}
+              </button>
+              <div>
+                {this.state.expandedSearch == index ?
+                  <AdList
+                    token={this.state.token}
+                    searchId={search._id}
+                  /> : ''}
+              </div>
+            </li>
           }
         </div>));
       return (

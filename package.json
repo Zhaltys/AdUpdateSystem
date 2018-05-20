@@ -7,7 +7,9 @@
     "test": "test",
     "core": "node --max-old-space-size=4096 ./core/server.js",
     "backend": "node ./backend/server.js",
-    "frontend": "webpack-dev-server --open --hot"
+    "frontend": "webpack-dev-server --open --hot",
+    "eslint": "eslint ./**",
+    "fixcode": "eslint --fix ./**"
   },
   "author": "Lukas",
   "license": "ISC",
@@ -34,6 +36,11 @@
     "react-dom": "16.0.0",
     "style-loader": "0.13.1",
     "webpack": "2.2.1",
-    "webpack-dev-server": "2.3.0"
+    "webpack-dev-server": "2.3.0",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1"
   }
 }

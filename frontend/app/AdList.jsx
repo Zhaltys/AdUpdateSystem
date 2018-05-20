@@ -6,7 +6,7 @@ export default class AdList extends React.Component {
 
     this.state = {
       ads: [],
-      searchId: props.searchId
+      searchId: props.searchId,
     };
     this.getData = this.getData.bind(this);
   }
@@ -16,7 +16,7 @@ export default class AdList extends React.Component {
   }
   getData() {
     console.log(`JWT ${this.props.token}`);
-    return fetch('http://localhost:3000/Ads/'+ this.state.searchId, {
+    return fetch(`http://localhost:3000/Ads/${this.state.searchId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -25,9 +25,10 @@ export default class AdList extends React.Component {
     })
       .then(response => response.json())
       .then((responseJson) => {
-        //console.log(responseJson);
-        this.setState({ ...this.state,
-          ads: responseJson
+        // console.log(responseJson);
+        this.setState({
+          ...this.state,
+          ads: responseJson,
         }, () => {
           // do something with new state
         });
@@ -42,11 +43,11 @@ export default class AdList extends React.Component {
       <span className="container">
         <li className="list-group-item" key={index}>
           <div className="ad-title"> {ad.title}</div>
-          <div className="ad-url">Url: 
-          <a href={ad.url}>{ad.url}
-          </a>
-          </div>          
-        <img className="ad-picture" src={ad.imageUrl}/> 
+          <div className="ad-url">Url:
+            <a href={ad.url}>{ad.url}
+            </a>
+          </div>
+          <img className="ad-picture" src={ad.imageUrl} />
         </li>
       </span>));
     return (

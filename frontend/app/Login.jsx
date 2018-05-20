@@ -4,9 +4,9 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'Lukas',
-      password: '123',
-      message: ''
+      username: '',
+      password: '',
+      message: '',
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -57,8 +57,8 @@ export default class Login extends React.Component {
           <span> Password: </span>
           <input className="form-control" placeholder="Password" onChange={this.handlePasswordChange} type="password" value={this.state.password} />
         </div>
-        <button className="btn btn-success" style={{'margin-top' : '5px'}} onClick={this.handleLogin}>Login</button>
-        {this.state.message.length?<div>{this.state.message}</div> : ''}
+        <button className="btn btn-success" style={{ 'margin-top': '5px' }} onClick={this.handleLogin}>Login</button>
+        {this.state.message.length ? <div>{this.state.message}</div> : ''}
       </div>
     );
   }

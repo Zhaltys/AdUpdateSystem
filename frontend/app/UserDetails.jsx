@@ -7,7 +7,7 @@ export default class UserDetails extends React.Component {
       username: props.user.username,
       email: props.user.email,
       _id: props.user._id,
-      message: ''
+      message: '',
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -31,19 +31,18 @@ export default class UserDetails extends React.Component {
   }
 
   sendData() {
-    fetch('http://localhost:3000/Users/'+this.props.user._id, {
+    fetch(`http://localhost:3000/Users/${this.props.user._id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
-        authorization: (`JWT ${this.props.token}`)
+        authorization: (`JWT ${this.props.token}`),
       },
       body: JSON.stringify(this.state),
     }).then(response => response.json())
       .then((responseJson) => {
-        this.setState(...this.state, { message: responseJson.message?responseJson.message : '' });
-        if (responseJson.user)
-        {
-            this.props.handleUserUpdate(responseJson.user);
+        this.setState(...this.state, { message: responseJson.message ? responseJson.message : '' });
+        if (responseJson.user) {
+          this.props.handleUserUpdate(responseJson.user);
         }
       })
       .catch((error) => {
@@ -65,8 +64,8 @@ export default class UserDetails extends React.Component {
           <span> Email: </span>
           <input className="form-control" placeholder="Email" onChange={this.handleEMailChange} type="text" value={this.state.email} />
         </div>
-        <button className="btn btn-success" style={{'margin-top' : '5px'}} onClick={this.handleUpdate}>Update</button>
-        {this.state.message.length?<div>{this.state.message}</div> : ''}
+        <button className="btn btn-success" style={{ 'margin-top': '5px' }} onClick={this.handleUpdate}>Update</button>
+        {this.state.message.length ? <div>{this.state.message}</div> : ''}
       </div>
     );
   }
