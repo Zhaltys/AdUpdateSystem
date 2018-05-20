@@ -18,10 +18,10 @@ export default class Main extends React.Component {
         false, // Login
         false, // Register
         false, // users
-        false, // ads
-        false, // my ads
-        false, // new ad
-        false  // user details
+        false, // 
+        false, // my searches
+        false, // new search
+        false, // user details
       ],
       token: '',
       user: null,
@@ -37,7 +37,6 @@ export default class Main extends React.Component {
     this.handleUserUpdate = this.handleUserUpdate.bind(this);
   }
   setLogin(token, user) {
-    console.log(user);
     const defaultWindow = [
       true,
       false,
@@ -46,12 +45,12 @@ export default class Main extends React.Component {
       false,
       false,
       false,
-      false
+      false,
     ];
     this.setState({
       ...this.state,
-      token: token,
-      user: user,
+      token,
+      user,
       window: defaultWindow,
       showModal: true,
     });
@@ -65,7 +64,7 @@ export default class Main extends React.Component {
       false,
       false,
       false,
-      false
+      false,
     ];
     defaultWindow[n] = true;
     this.setState({
@@ -73,11 +72,10 @@ export default class Main extends React.Component {
       window: defaultWindow,
     });
   }
-  handleUserUpdate(user)
-  {
+  handleUserUpdate(user) {
     this.setState({
       ...this.state,
-      user: user
+      user,
     });
   }
 
@@ -93,9 +91,9 @@ export default class Main extends React.Component {
     this.setState({
       ...this.state,
       showMessageModal: true,
-      message: m,
+      message: m
     });
-    this.setActive(0);
+    this.setActive(5);
   }
   handleOK() {
     this.setState({
@@ -108,20 +106,32 @@ export default class Main extends React.Component {
     return (
       <div>
         {this.state.showModal ?
-          <div className="modal">
+          <div className="modal show">
+          <div className="modal-dialog">
             <div className="modal-content">
-              <p> You are now logged in as <h2>{this.state.user.username}</h2> </p>
-              <button onClick={this.handleOK}>OK</button>
+            <div className="modal-body">
+              <span> You are now logged in as <h2>{this.state.user.username}</h2> </span>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-secondary" onClick={this.handleOK}>OK</button>
+            </div>
+            </div>
             </div>
           </div> : ''
         }
         {this.state.showMessageModal ?
-          <div className="modal">
-            <div className="modal-content">
-              <p> {this.state.message} </p>
-              <button onClick={this.handleOK}>OK</button>
-            </div>
-          </div> : ''
+        <div className="modal show">
+        <div className="modal-dialog">
+          <div className="modal-content">
+          <div className="modal-body">
+          <div> {this.state.message} </div>
+          </div>
+          <div className="modal-footer">
+            <button className="btn btn-secondary" onClick={this.handleOK}>OK</button>
+          </div>
+          </div>
+          </div>
+        </div> : ''
         }
         <Header
           window={this.state.window}
@@ -129,30 +139,28 @@ export default class Main extends React.Component {
           user={this.state.user}
         />
         <div className="container">
-        <div className="row">
-        <div className="col-sm-1">
-        </div>          
-          {this.state.window[0] ? (
-            <div style={{width : '600px', 'margin': 'auto'}}>
-              <h2>
+          <div className="row">
+            <div className="col-sm-1" />
+            {this.state.window[0] ? (
+              <div style={{ width: '600px', margin: 'auto' }}>
+                <h2>
                 Ad Update Tracking System Prototype
-              </h2>
-              <div>
-                <img src={png} alt="" />
+                </h2>
+                <div>
+                  <img src={png} alt="" />
+                </div>
               </div>
-            </div>        
           ) : '' }
-          {this.state.window[1] ? (<div className="col-auto"><Login setLogin={this.setLogin} /></div>) : '' }
-          {this.state.window[2] ? (<div className="col-auto"><UserRegister register={this.handleRegister} /></div>) : ''}
-          {this.state.window[3] ? (<div className="col-auto"><UserList /></div>) : '' }
-          {this.state.window[5] ? (<div className="col-auto"><MySearchesList token={this.state.token} /></div>) : ''}
-          {this.state.window[6] ? (<div className="col-auto"><NewSearch token={this.state.token} modal={this.handleNewSearch} /></div>) : ''}
-          {this.state.window[7] ? (<div className="col-auto"><UserDetails token={this.state.token} handleUserUpdate={this.handleUserUpdate} user={this.state.user}/></div>):''}
-        </div>
-        <div className="col-sm-1">
+            {this.state.window[1] ? (<div className="col-auto"><Login setLogin={this.setLogin} /></div>) : '' }
+            {this.state.window[2] ? (<div className="col-auto"><UserRegister register={this.handleRegister} /></div>) : ''}
+            {this.state.window[3] ? (<div className="col-auto"><UserList /></div>) : '' }
+            {this.state.window[5] ? (<div className="col-auto"><MySearchesList token={this.state.token} /></div>) : ''}
+            {this.state.window[6] ? (<div className="col-auto"><NewSearch token={this.state.token} modal={this.handleNewSearch} /></div>) : ''}
+            {this.state.window[7] ? (<div className="col-auto"><UserDetails token={this.state.token} handleUserUpdate={this.handleUserUpdate} user={this.state.user} /></div>) : ''}
+          </div>
+          <div className="col-sm-1" />
         </div>
       </div>
-      </div>      
     );
   }
 }

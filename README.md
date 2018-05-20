@@ -11,4 +11,4 @@ Before starting the project, make sure to configure email service options in the
 
 // to start mongo
 # cd "C:\Program Files\MongoDB\Server\3.4\bin\"
-# mongod.exe --dbpath C:\DB
+# .\mongod.exe --dbpath C:\DB

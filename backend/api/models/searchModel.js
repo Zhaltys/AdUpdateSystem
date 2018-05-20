@@ -1,23 +1,23 @@
-'use strict';
-var mongoose = require('mongoose');
-var Model = mongoose.Schema;
+
+const mongoose = require('mongoose');
+
+const Model = mongoose.Schema;
 
 
-var SearchModel = new Model({
+const SearchModel = new Model({
   title: {
     type: String,
-    required: 'Title missing'
+    required: 'Title missing',
   },
   url: {
     type: String,
-    required: 'URL missing'
+    required: 'URL missing',
   },
   userId: {
     type: String,
-      required: 'User ID missing'
-  }
+    required: 'User ID missing',
+  },
 });
-
 
 
 module.exports = mongoose.model('Searches', SearchModel);

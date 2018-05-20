@@ -5,7 +5,7 @@ module.exports = {
     adminMail: "example@gmail.com",
     mailHost: "smtp.gmail.com",
     mailHostName: "example@gmail.com",
-    mailHostPassword: "exapmlepass"
+    mailHostPassword: "exapmlepass",
     handledWebsites: [
         'skelbiu.lt',
         'autogidas.lt'
