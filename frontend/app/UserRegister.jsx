@@ -68,7 +68,7 @@ export default class UserRegister extends React.Component {
         </div>
         <div>
           <span>
-            Please enter your E-mail:
+            Please enter your Username:
           </span>
           <input className="form-control" placeholder="Username" onChange={this.handleUsernameChange} type="text" value={this.state.username} />
         </div>
